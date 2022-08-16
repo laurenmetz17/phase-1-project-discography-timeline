@@ -7,6 +7,13 @@ document.addEventListener('DOMContentLoaded',function() {
 
 function getArtistInfo(e) {
     e.preventDefault();
-    console.log(e);
-    console.log(e.target.children[1].value);
+    let artistInput = e.target.children[1].value;
+    let albums = []
+    fetch(`https://itunes.apple.com/search?media=music&entity=album&term=${artistInput}`).then(resp => resp.json())
+    .then(data => {
+        albums = data.results;
+        console.log(albums);
+    });
+    return albums;
+        
 }
