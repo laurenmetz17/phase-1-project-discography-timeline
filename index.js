@@ -13,35 +13,61 @@ function renderAlbums(e) {
     .then(data => {
         albums = data.results;
         console.log(albums);
+        let sorted = sortAlbums(albums);
+        console.log(sorted);
         albums.forEach(album => createAlbumCard(album));
     });
     return albums;
         
 }
 
+function sortAlbums(albums) {
+    let sorted = {};
+    albums.forEach(album  => {
+        let year = album.releaseDate.substr(0,4);
+        let date = album.releaseDate.substr(5,10);
+        if(sorted[year] == undefined) {
+            sorted[year] = {};
+            sorted[year][date] = [];
+            sorted[year][date].push(album);
+        }
+        else {
+            if(sorted[year][date] == undefined) {
+                sorted[year][date] = [];
+                sorted[year][date].push(album);
+            }
+            else {
+                sorted[year][date].push(album);
+            }
+        }
+    })
+
+    return sorted;
+
+
+}
 function createAlbumCard(album) {
     let albumCard = document.createElement('card');
     albumCard.classList.add('albums');
-    
     let albumTitle = document.createElement('h2');
     albumTitle.textContent = album.collectionName;
     let albumArt = document.createElement('img');
-    //albumArt.src = album.artWorkUrl100;
+    albumArt.src = album.artworkUrl100;
     let albumLink = document.createElement('a');
     albumLink.href = album.collectionViewUrl;
     let albumGenre = document.createElement('h3');
     albumGenre.textContent = album.primaryGenreName;
     let albumDate = document.createElement('p');
     albumDate.classList.add('release-dates');
-    albumDate.textContent = album.releaseDate;
+    albumDate.textContent = album.releaseDate.substring(0,10);
 
     albumCard.append(albumTitle);
     albumCard.append(albumArt);
     albumCard.append(albumGenre);
-    albumCard.append(albumLink);
+    albumCard.append(albumLink); // fix link to have text content or be linked to the title
     albumCard.append(albumDate);
 
-    document.querySelector('#timeline').append(albumCard);
+    //document.querySelector('#timeline').append(albumCard);
     console.log(albumCard);
 
 }
