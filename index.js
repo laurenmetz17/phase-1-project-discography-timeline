@@ -1,21 +1,31 @@
 document.addEventListener('DOMContentLoaded',function() {
     let artistForm = document.querySelector('form');
     artistForm.addEventListener('submit', renderAlbums);
+    //make the original form look cool
 })
 
 //note that it currently does not clear the page if you enter a new artkst it appneds to the end
 //has repeats of the same albums probably because 
+//add in a warning to the alert the user when they enter an artist that does not exist in the API
 
 //build the html of the timeline to be styled
-function renderTimeline(e) {
-    console.log('sumitted');
+function renderTimeline(artist) {
+    timelineTitle = document.createElement('h1');
+    timelineTitle.textContent = `${artist} Discography Timeline`;
+    //center the title 
+    //add in a center line for the timeline 
+    //add in connector arms for each album card 
+    //make album cards alternate sides of the center line
+    //change background color 
+    //add in event listeners on the album cards
+    document.querySelector('#timeline').append(timelineTitle)
 }
 
 //creates an album card for each album sorted by release date and adds them to the timeline
 function renderAlbums(e) {
     e.preventDefault();
-    renderTimeline();
     let artistInput = e.target.children[1].value;
+    renderTimeline(artistInput);
     let albums = [];
     //fetches the data of the artist directed by the artist inputdfc
     fetch(`https://itunes.apple.com/search?media=music&entity=album&term=${artistInput}`).then(resp => resp.json())
