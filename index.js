@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded',function() {
 //note that it currently does not clear the page if you enter a new artkst it appneds to the end
 //has repeats of the same albums probably because 
 //add in a warning to the alert the user when they enter an artist that does not exist in the API
+//some aretist inputs match multiple actual artists and returns all of tbem
+//add something to ask user whcih artist they actually mean or auto find the strict match
 
 //build the html of the timeline to be styled
 function renderTimeline(artist) {
@@ -65,10 +67,7 @@ function sortAlbums(albums) {
             }
         }
     })
-
     return sorted;
-
-
 }
 
 //creates an album card including a title, art, genre, link, and release date
