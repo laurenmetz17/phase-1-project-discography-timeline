@@ -1,14 +1,23 @@
 document.addEventListener('DOMContentLoaded',function() {
     let artistForm = document.querySelector('form');
-    artistForm.addEventListener('submit', renderAlbums)
-
-
+    artistForm.addEventListener('submit', renderAlbums);
 })
 
+//note that it currently does not clear the page if you enter a new artkst it appneds to the end
+//has repeats of the same albums probably because 
+
+//build the html of the timeline to be styled
+function renderTimeline(e) {
+    console.log('sumitted');
+}
+
+//creates an album card for each album sorted by release date and adds them to the timeline
 function renderAlbums(e) {
     e.preventDefault();
+    renderTimeline();
     let artistInput = e.target.children[1].value;
     let albums = [];
+    //fetches the data of the artist directed by the artist inputdfc
     fetch(`https://itunes.apple.com/search?media=music&entity=album&term=${artistInput}`).then(resp => resp.json())
     .then(data => {
         albums = data.results;
@@ -21,13 +30,11 @@ function renderAlbums(e) {
                 });
             }
         }
-    return sorted;     
+        return sorted;     
     });
 }  
     
-        
-
-
+//sorts the albums by the year and date of their release date into a nested object the third level being an array
 function sortAlbums(albums) {
     let sorted = {};
     albums.forEach(album  => {
@@ -53,6 +60,8 @@ function sortAlbums(albums) {
 
 
 }
+
+//creates an album card including a title, art, genre, link, and release date
 function createAlbumCard(album) {
     let albumCard = document.createElement('card');
     albumCard.classList.add('albums');
@@ -75,6 +84,5 @@ function createAlbumCard(album) {
     albumCard.append(albumDate);
 
     document.querySelector('#timeline').append(albumCard);
-    console.log(albumCard);
 
 }
