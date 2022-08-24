@@ -6,15 +6,25 @@ body {
     color:black
 }
 
+.input-artist {
+    color:black;
+}
+
 * {
     color:white
 }
 
 #center-line {
     border-left :6px solid green;
-    height: 100vh;
+    height:100vh;
     position:absolute;
     left:50%;
     margin-left: -3px;
     top:200px;
+}
+
+.albums {
+    /*border-width: 4px;
+    border-color: green;
+    */
 }

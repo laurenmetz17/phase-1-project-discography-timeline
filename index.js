@@ -15,13 +15,15 @@ function renderTimeline(artist) {
     timelineTitle = document.createElement('h1');
     timelineTitle.textContent = `${artist} Discography Timeline`;
     timelineTitle.style.textAlign = 'center';
-    //center the title 
-    //add in a center line for the timeline 
+    let body = document.querySelector('body');
+    let timeline = document.querySelector('#timeline');
+    document.querySelector('#center-line').style.height = '200000px'// hard code need to fix so that the line changes with the page height
     //add in connector arms for each album card 
     //make album cards alternate sides of the center line
     //change background color 
     //add in event listeners on the album cards
-    document.querySelector('#timeline').append(timelineTitle)
+    timeline.append(timelineTitle);
+
 }
 
 //creates an album card for each album sorted by release date and adds them to the timeline
@@ -73,7 +75,7 @@ function sortAlbums(albums) {
 
 //creates an album card including a title, art, genre, link, and release date
 function createAlbumCard(album) {
-    let albumCard = document.createElement('card');
+    let albumCard = document.createElement('div');
     albumCard.classList.add('albums');
     let albumTitle = document.createElement('h2');
     albumTitle.textContent = album.collectionName;
@@ -95,5 +97,10 @@ function createAlbumCard(album) {
     albumCard.append(albumDate);
 
     document.querySelector('#timeline').append(albumCard);
+    //albumCard.style.borderWidth = '4px';
+    albumCard.style.border = '3px solid green';
+    albumCard.style.borderRadius ='25px'
+
+    albumCard.style.padding = '1rem'
 
 }
