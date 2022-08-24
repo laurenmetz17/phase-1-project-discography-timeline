@@ -15,7 +15,8 @@ function renderAlbums(e) {
         console.log(albums);
         let sorted = sortAlbums(albums);
         console.log(sorted);
-        albums.forEach(album => createAlbumCard(album));
+
+        //albums.forEach(album => createAlbumCard(album));
     });
     return albums;
         
@@ -24,8 +25,8 @@ function renderAlbums(e) {
 function sortAlbums(albums) {
     let sorted = {};
     albums.forEach(album  => {
-        let year = album.releaseDate.substr(0,4);
-        let date = album.releaseDate.substr(5,10);
+        let year = album.releaseDate.substring(0,4);
+        let date = album.releaseDate.substring(5,10);
         if(sorted[year] == undefined) {
             sorted[year] = {};
             sorted[year][date] = [];
@@ -67,7 +68,7 @@ function createAlbumCard(album) {
     albumCard.append(albumLink); // fix link to have text content or be linked to the title
     albumCard.append(albumDate);
 
-    //document.querySelector('#timeline').append(albumCard);
+    document.querySelector('#timeline').append(albumCard);
     console.log(albumCard);
 
 }
