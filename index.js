@@ -71,6 +71,7 @@ function createAlbumCard(album) {
     albumArt.src = album.artworkUrl100;
     let albumLink = document.createElement('a');
     albumLink.href = album.collectionViewUrl;
+    albumLink.textContent = "Link to apple Music page!"
     let albumGenre = document.createElement('h3');
     albumGenre.textContent = album.primaryGenreName;
     let albumDate = document.createElement('p');
@@ -80,7 +81,7 @@ function createAlbumCard(album) {
     albumCard.append(albumTitle);
     albumCard.append(albumArt);
     albumCard.append(albumGenre);
-    albumCard.append(albumLink); // fix link to have text content or be linked to the title
+    albumCard.append(albumLink); 
     albumCard.append(albumDate);
 
     document.querySelector('#timeline').append(albumCard);
