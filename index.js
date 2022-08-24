@@ -14,13 +14,28 @@ function renderAlbums(e) {
         albums = data.results;
         console.log(albums);
         let sorted = sortAlbums(albums);
+        //iterate through sorted to create an album card for each
         console.log(sorted);
+        for(let year in sorted) {
+            console.log(sorted[year]);
+            for(let date in sorted[year]) {
+                console.log(sorted[year][date]);
+                sorted[year][date].forEach(album => {
+                    console.log(album);
+                    createAlbumCard(album);
+                });
 
-        //albums.forEach(album => createAlbumCard(album));
-    });
-    return albums;
+            }
+        }
+        //console.log(Object.keys(year));
         
-}
+            //albums.forEach(album => createAlbumCard(album));
+    return sorted;     
+    });
+}  
+    
+        
+
 
 function sortAlbums(albums) {
     let sorted = {};
