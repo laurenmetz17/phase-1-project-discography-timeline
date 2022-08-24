@@ -9,3 +9,12 @@ body {
 * {
     color:white
 }
+
+#center-line {
+    border-left :6px solid green;
+    height: 100vh;
+    position:absolute;
+    left:50%;
+    margin-left: -3px;
+    top:200px;
+}

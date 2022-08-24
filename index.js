@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded',function() {
 function renderTimeline(artist) {
     timelineTitle = document.createElement('h1');
     timelineTitle.textContent = `${artist} Discography Timeline`;
+    timelineTitle.style.textAlign = 'center';
     //center the title 
     //add in a center line for the timeline 
     //add in connector arms for each album card 
