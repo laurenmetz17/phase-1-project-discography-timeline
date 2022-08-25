@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded',function() {
 function renderGenre(e) {
     let artistInput = e.target.parentNode.children[1].value
     let albums = [];
-    genres = [];
+    let genres = [];
+    let genreCount = {};
     return fetch(`https://itunes.apple.com/search?media=music&entity=album&term=${artistInput}`).then(resp => resp.json())
     .then(data => {
         albums = data.results;
@@ -21,6 +22,16 @@ function renderGenre(e) {
             genres.push(album.primaryGenreName);
         })
         console.log(genres);
+        genres.forEach(genre => {
+            if(genreCount[genre] == undefined) {
+                genreCount[genre] = 1;
+            }
+            else {
+                genreCount[genre] = genreCount[genre] + 1;
+            }
+
+        })
+        console.log(genreCount);
         return genres;
     })
 }
