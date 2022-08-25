@@ -23,8 +23,10 @@ function renderTimeline(e) {
         let timeline = document.querySelector('#timeline');
         document.querySelector('#center-line').style.height = '200000px';
         timeline.append(timelineTitle);
-        sorted = renderAlbums(artistInput);
-        console.log(sorted);
+        
+        renderAlbums(artistInput).then(sorted => {
+            console.log(Object.keys(sorted));
+        })
 
         
     }
@@ -47,7 +49,7 @@ function renderTimeline(e) {
 function renderAlbums(artistInput) {
     let albums = [];
     //fetches the data of the artist directed by the artist inputdfc
-    fetch(`https://itunes.apple.com/search?media=music&entity=album&term=${artistInput}`).then(resp => resp.json())
+    return fetch(`https://itunes.apple.com/search?media=music&entity=album&term=${artistInput}`).then(resp => resp.json())
     .then(data => {
         albums = data.results;
         let sorted = sortAlbums(albums);
@@ -58,6 +60,7 @@ function renderAlbums(artistInput) {
                 });
             }
         } 
+        return sorted;
     });
 }  
     
