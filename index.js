@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded',function() {
     let artistForm = document.querySelector('form');
     artistForm.addEventListener('submit', renderAlbums);
-    //make the original form look cool
 })
 
 //note that it currently does not clear the page if you enter a new artkst it appneds to the end
@@ -33,7 +32,6 @@ function renderTimeline(artist) {
    // hard code need to fix so that the vertical line changes with the page height
     //add in connector arms for each album card 
     //make album cards alternate sides of the center line
-    //change background color 
     //add in event listeners on the album cards
 }
 
@@ -110,7 +108,9 @@ function createAlbumCard(album) {
 
     document.querySelector('#timeline').append(albumCard);
     albumCard.style.border = '3px solid green';
-    albumCard.style.borderRadius ='25px'
+    albumCard.style.borderRadius ='25px';
+    albumCard.style.width = '300px';
+    albumCard.style.marginBottom = '50px';
 
     albumCard.style.padding = '1rem'
 
