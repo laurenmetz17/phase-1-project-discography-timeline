@@ -17,13 +17,13 @@ function renderGenre(e) {
     let genreCount = {};
     let genreTitle = document.querySelector('#genre-title');
     genreTitle.textContent = `${artistInput} Career Genre Count`;
+    genreTitle.style.textAlign = 'center';
     return fetch(`https://itunes.apple.com/search?media=music&entity=album&term=${artistInput}`).then(resp => resp.json())
     .then(data => {
         albums = data.results;
         albums.forEach(album => {
             genres.push(album.primaryGenreName);
         })
-        console.log(genres);
         genres.forEach(genre => {
             if(genreCount[genre] == undefined) {
                 genreCount[genre] = 1;
@@ -33,22 +33,36 @@ function renderGenre(e) {
             }
 
         })
-        console.log(genreCount);
+
         let genreDiv = document.querySelector('#genre-info');
+        genreDiv.style.fontFamily = 'Impact, fantasy';
+        genreDiv.style.border = '6px solid green';
+        genreDiv.style.borderRadius = '25px';
         let genreTable = document.querySelector('#genre-table');
+        genreTable.style.width = '100%';
         let genreNames = document.createElement('tr');
         let genreNums = document.createElement('tr');
         genreTable.append(genreNames);
         genreTable.append(genreNums);
+
+
+        
+        genreTable.style.tableLayout = 'fixed';
+        /*
+        genreTable.style.border = '3px solid green';
+        genreTable.style.borderCollapse = 'collapse';
+        */
         for(let genre in genreCount) {
             let genreName = document.createElement('th');
             genreName.textContent = genre;
+            genreName.style.border = '3px solid green';
             genreNames.append(genreName);
             let genreNum = document.createElement('td');
             genreNum.textContent = genreCount[genre];
+            genreNum.style.border = '3px solid green';
+            genreNums.style.textAlign = 'center';
             genreNums.append(genreNum);
         }
-        console.log(genreTable);
         return genres;
     })
 }
