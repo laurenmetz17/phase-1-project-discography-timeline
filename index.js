@@ -2,7 +2,17 @@
 document.addEventListener('DOMContentLoaded',function() {
     let artistForm = document.querySelector('form');
     artistForm.addEventListener('submit', renderTimeline);
+    let timelineButton = document.querySelector('[name = "submit-timeline"]');
+    console.log(timelineButton);
+    let genreButton = document.querySelector('[name = "submit-genre"]');
+    console.log(genreButton);
+    genreButton.addEventListener('click', renderGenre);
+
 })
+
+function renderGenre(e) {
+    console.log(e.target.parentNode.children[1].value)
+}
 
 //note that it currently does not clear the page if you enter a new artkst it appneds to the end
 //has repeats of the same albums probably because 
@@ -13,6 +23,7 @@ document.addEventListener('DOMContentLoaded',function() {
 //build the html of the timeline to be styled
 function renderTimeline(e) {
     e.preventDefault();
+    console.log(e.target);
     let artistInput = e.target.children[1].value;
     e.target.children[1].value = '';
     if(document.querySelector('#timeline-title') == null) {
@@ -39,7 +50,7 @@ function renderTimeline(e) {
                 for(let date in sorted[year]) {
                     count = count + sorted[year][date].length;
                 }
-                let paddingNum = 387* count + (70 * (count-2))//figure out padding based on height of albumCard ;
+                let paddingNum = 462 * count + (70 * (count-2))//figure out padding based on height of albumCard ;
                 yearElement.style.marginBottom = `${paddingNum}px`;
                 document.querySelector('#center-line').append(yearElement);
             }
@@ -115,15 +126,18 @@ function createAlbumCard(album) {
     albumTitle.textContent = album.collectionName;
     let albumArt = document.createElement('img');
     albumArt.src = album.artworkUrl100;
+    albumArt.style.width = '150px';
+    albumArt.style.height = '150px'
     let albumLink = document.createElement('a');
     albumLink.href = album.collectionViewUrl;
     albumLink.textContent = "Link to apple Music page!"
     let albumGenre = document.createElement('h3');
+    albumGenre.classList.add('genres');
     albumGenre.textContent = album.primaryGenreName;
     let albumDate = document.createElement('p');
     albumDate.style.color = 'green'
     albumDate.classList.add('release-dates');
-    albumDate.textContent = album.releaseDate.substring(5,10);
+    albumDate.textContent = album.releaseDate.substring(0,10);
 
     albumCard.append(albumTitle);
     albumCard.append(albumArt);
@@ -135,7 +149,7 @@ function createAlbumCard(album) {
     albumCard.style.border = '6px solid green';
     albumCard.style.borderRadius ='25px';
     albumCard.style.width = '300px';
-    albumCard.style.height = '375px'
+    albumCard.style.height = '450px'
     albumCard.style.marginBottom = '50px';
     albumCard.style.fontFamily = 'Impact, fantasy';
     albumCard.style.textAlign = 'center';
@@ -146,6 +160,7 @@ function createAlbumCard(album) {
     connector.style.backgroundColor = 'green'
     connector.style.color = 'red'
     connector.style.marginLeft ='305px'
+    console.log(albumCard)
 
     albumCard.append(connector);
 
