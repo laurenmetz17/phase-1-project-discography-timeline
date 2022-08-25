@@ -12,18 +12,29 @@ document.addEventListener('DOMContentLoaded',function() {
 
 //build the html of the timeline to be styled
 function renderTimeline(artist) {
-    timelineTitle = document.createElement('h1');
-    timelineTitle.textContent = `${artist} Discography Timeline`;
-    timelineTitle.style.textAlign = 'center';
-    let body = document.querySelector('body');
-    let timeline = document.querySelector('#timeline');
-    document.querySelector('#center-line').style.height = '200000px'// hard code need to fix so that the line changes with the page height
+    if(document.querySelector('#timeline-title') == null) {
+        let timelineTitle = document.createElement('h1');
+        timelineTitle.id = 'timeline-title';
+        timelineTitle.textContent = `${artist} Discography Timeline`;
+        timelineTitle.style.textAlign = 'center';
+        let timeline = document.querySelector('#timeline');
+        document.querySelector('#center-line').style.height = '200000px'
+        timeline.append(timelineTitle);
+    }
+    else {
+        let timelineTitle = document.querySelector('#timeline-title');
+        timelineTitle.textContent = `${artist} Discography Timeline`;
+        let oldAlbums = document.getElementsByClassName('albums');
+        console.log(oldAlbums)
+        //for(let i = 0; i< oldAlbums.length; i++) {
+        //    oldAlbums[i].remove();
+        //}
+    }
+   // hard code need to fix so that the vertical line changes with the page height
     //add in connector arms for each album card 
     //make album cards alternate sides of the center line
     //change background color 
     //add in event listeners on the album cards
-    timeline.append(timelineTitle);
-
 }
 
 //creates an album card for each album sorted by release date and adds them to the timeline
@@ -45,7 +56,8 @@ function renderAlbums(e) {
                 });
             }
         }
-        return sorted;     
+        e.target.children[1].value = ''
+;        return sorted;     
     });
 }  
     
@@ -97,7 +109,6 @@ function createAlbumCard(album) {
     albumCard.append(albumDate);
 
     document.querySelector('#timeline').append(albumCard);
-    //albumCard.style.borderWidth = '4px';
     albumCard.style.border = '3px solid green';
     albumCard.style.borderRadius ='25px'
 
