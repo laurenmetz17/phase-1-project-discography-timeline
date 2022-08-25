@@ -138,5 +138,16 @@ function createAlbumCard(album) {
     albumCard.style.width = '300px';
     albumCard.style.marginBottom = '50px';
 
+    let connector = document.createElement('div');
+    connector.style.width = '80px'
+    connector.style.height = '3px'
+    connector.style.backgroundColor = 'green'
+    connector.style.color = 'red'
+    connector.style.marginLeft ='290px'
+
+
+    albumCard.append(connector);
+    console.log(albumCard);
+
 
 }
