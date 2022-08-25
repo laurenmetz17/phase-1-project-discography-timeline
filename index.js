@@ -11,7 +11,18 @@ document.addEventListener('DOMContentLoaded',function() {
 })
 
 function renderGenre(e) {
-    console.log(e.target.parentNode.children[1].value)
+    let artistInput = e.target.parentNode.children[1].value
+    let albums = [];
+    genres = [];
+    return fetch(`https://itunes.apple.com/search?media=music&entity=album&term=${artistInput}`).then(resp => resp.json())
+    .then(data => {
+        albums = data.results;
+        albums.forEach(album => {
+            genres.push(album.primaryGenreName);
+        })
+        console.log(genres);
+        return genres;
+    })
 }
 
 //note that it currently does not clear the page if you enter a new artkst it appneds to the end
