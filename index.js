@@ -15,6 +15,8 @@ function renderGenre(e) {
     let albums = [];
     let genres = [];
     let genreCount = {};
+    let genreTitle = document.querySelector('#genre-title');
+    genreTitle.textContent = `${artistInput} Career Genre Count`;
     return fetch(`https://itunes.apple.com/search?media=music&entity=album&term=${artistInput}`).then(resp => resp.json())
     .then(data => {
         albums = data.results;
