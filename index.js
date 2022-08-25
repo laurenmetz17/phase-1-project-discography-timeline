@@ -32,6 +32,21 @@ function renderGenre(e) {
 
         })
         console.log(genreCount);
+        let genreDiv = document.querySelector('#genre-info');
+        let genreTable = document.querySelector('#genre-table');
+        let genreNames = document.createElement('tr');
+        let genreNums = document.createElement('tr');
+        genreTable.append(genreNames);
+        genreTable.append(genreNums);
+        for(let genre in genreCount) {
+            let genreName = document.createElement('th');
+            genreName.textContent = genre;
+            genreNames.append(genreName);
+            let genreNum = document.createElement('td');
+            genreNum.textContent = genreCount[genre];
+            genreNums.append(genreNum);
+        }
+        console.log(genreTable);
         return genres;
     })
 }
