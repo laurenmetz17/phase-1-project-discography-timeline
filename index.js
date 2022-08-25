@@ -24,14 +24,24 @@ function renderTimeline(e) {
         
         renderAlbums(artistInput).then(sorted => {
             let years = document.querySelector('#years');
+            console.log(sorted);
             for(let year in sorted) {
                 let yearElement = document.createElement('p');
                 yearElement.textContent = year;
-                yearElement.style.margin = '10px';
+                yearElement.style.marginLeft = '10px';
+                let count = 0;
+                for(let date in sorted[year]) {
+                    count = count + sorted[year][date].length;
+                }
+                console.log(count);
+                console.log(sorted[year]);
+                let paddingNum = 350 * count + 70 ;
+                console.log(paddingNum.toString());
+
+                yearElement.style.marginBottom = `${paddingNum}px`;
+                console.log(yearElement.style.marginBottom);
                 //make bottom margin equal to the height of the divs included in each year including padding
                 document.querySelector('#center-line').append(yearElement);
-                
-                console.log(sorted[year]);
             }
             console.log(timeline);
 
@@ -126,6 +136,5 @@ function createAlbumCard(album) {
     albumCard.style.width = '300px';
     albumCard.style.marginBottom = '50px';
 
-    albumCard.style.padding = '1rem'
 
 }
