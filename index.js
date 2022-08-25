@@ -28,19 +28,21 @@ function renderTimeline(e) {
             for(let year in sorted) {
                 let yearElement = document.createElement('p');
                 yearElement.textContent = year;
-                yearElement.style.marginLeft = '10px';
+                yearElement.style.marginLeft = '30px';
+                yearElement.style.border = 'solid green';
+                yearElement.style.padding = '20px';
+                yearElement.style.fontSize = 'xx-large';
+                yearElement.style.backgroundColor = 'green';
+                yearElement.style.borderRadius = '50px'
                 let count = 0;
                 for(let date in sorted[year]) {
                     count = count + sorted[year][date].length;
                 }
                 console.log(count);
                 console.log(sorted[year]);
-                let paddingNum = 350 * count + 70 ;
+                let paddingNum = 350 * count //figure out padding based on height of albumCard ;
                 console.log(paddingNum.toString());
-
                 yearElement.style.marginBottom = `${paddingNum}px`;
-                console.log(yearElement.style.marginBottom);
-                //make bottom margin equal to the height of the divs included in each year including padding
                 document.querySelector('#center-line').append(yearElement);
             }
             console.log(timeline);
