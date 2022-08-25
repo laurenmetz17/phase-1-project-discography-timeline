@@ -1,6 +1,7 @@
+
 document.addEventListener('DOMContentLoaded',function() {
     let artistForm = document.querySelector('form');
-    artistForm.addEventListener('submit', renderAlbums);
+    artistForm.addEventListener('submit', renderTimeline);
 })
 
 //note that it currently does not clear the page if you enter a new artkst it appneds to the end
@@ -10,19 +11,26 @@ document.addEventListener('DOMContentLoaded',function() {
 //add something to ask user whcih artist they actually mean or auto find the strict match
 
 //build the html of the timeline to be styled
-function renderTimeline(artist) {
+function renderTimeline(e) {
+    e.preventDefault();
+    let artistInput = e.target.children[1].value;
+    e.target.children[1].value = '';
     if(document.querySelector('#timeline-title') == null) {
         let timelineTitle = document.createElement('h1');
         timelineTitle.id = 'timeline-title';
-        timelineTitle.textContent = `${artist} Discography Timeline`;
+        timelineTitle.textContent = `${artistInput} Discography Timeline`;
         timelineTitle.style.textAlign = 'center';
         let timeline = document.querySelector('#timeline');
-        document.querySelector('#center-line').style.height = '200000px'
+        document.querySelector('#center-line').style.height = '200000px';
         timeline.append(timelineTitle);
+        sorted = renderAlbums(artistInput);
+        console.log(sorted);
+
+        
     }
     else {
         let timelineTitle = document.querySelector('#timeline-title');
-        timelineTitle.textContent = `${artist} Discography Timeline`;
+        timelineTitle.textContent = `${artistInput} Discography Timeline`;
         let oldAlbums = document.getElementsByClassName('albums');
         console.log(oldAlbums)
         //for(let i = 0; i< oldAlbums.length; i++) {
@@ -36,16 +44,12 @@ function renderTimeline(artist) {
 }
 
 //creates an album card for each album sorted by release date and adds them to the timeline
-function renderAlbums(e) {
-    e.preventDefault();
-    let artistInput = e.target.children[1].value;
-    renderTimeline(artistInput);
+function renderAlbums(artistInput) {
     let albums = [];
     //fetches the data of the artist directed by the artist inputdfc
     fetch(`https://itunes.apple.com/search?media=music&entity=album&term=${artistInput}`).then(resp => resp.json())
     .then(data => {
         albums = data.results;
-        console.log(albums);
         let sorted = sortAlbums(albums);
         for(let year in sorted) {
             for(let date in sorted[year]) {
@@ -53,9 +57,7 @@ function renderAlbums(e) {
                     createAlbumCard(album);
                 });
             }
-        }
-        e.target.children[1].value = ''
-;        return sorted;     
+        } 
     });
 }  
     
