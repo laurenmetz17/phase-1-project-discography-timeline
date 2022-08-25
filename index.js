@@ -16,8 +16,6 @@ function renderTimeline(e) {
     let artistInput = e.target.children[1].value;
     e.target.children[1].value = '';
     if(document.querySelector('#timeline-title') == null) {
-        let timelineTitle = document.createElement('h1');
-        timelineTitle.id = 'timeline-title';
         timelineTitle.textContent = `${artistInput} Discography Timeline`;
         timelineTitle.style.textAlign = 'center';
         let timeline = document.querySelector('#timeline');
@@ -25,7 +23,18 @@ function renderTimeline(e) {
         timeline.append(timelineTitle);
         
         renderAlbums(artistInput).then(sorted => {
-            console.log(Object.keys(sorted));
+            let years = document.querySelector('#years');
+            for(let year in sorted) {
+                let yearElement = document.createElement('p');
+                yearElement.textContent = year;
+                yearElement.style.margin = '10px';
+                //make bottom margin equal to the height of the divs included in each year including padding
+                document.querySelector('#center-line').append(yearElement);
+                
+                console.log(sorted[year]);
+            }
+            console.log(timeline);
+
         })
 
         
