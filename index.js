@@ -18,13 +18,13 @@ function renderTimeline(e) {
     if(document.querySelector('#timeline-title') == null) {
         timelineTitle.textContent = `${artistInput} Discography Timeline`;
         timelineTitle.style.textAlign = 'center';
+        timelineTitle.style.fontFamily = 'Impact, fantasy'
         let timeline = document.querySelector('#timeline');
         document.querySelector('#center-line').style.height = '200000px';
         timeline.append(timelineTitle);
         
         renderAlbums(artistInput).then(sorted => {
             let years = document.querySelector('#years');
-            console.log(sorted);
             for(let year in sorted) {
                 let yearElement = document.createElement('p');
                 yearElement.textContent = year;
@@ -32,20 +32,17 @@ function renderTimeline(e) {
                 yearElement.style.border = 'solid green';
                 yearElement.style.padding = '20px';
                 yearElement.style.fontSize = 'xx-large';
+                yearElement.style.fontFamily = 'Impact, fantasy';
                 yearElement.style.backgroundColor = 'green';
                 yearElement.style.borderRadius = '50px'
                 let count = 0;
                 for(let date in sorted[year]) {
                     count = count + sorted[year][date].length;
                 }
-                console.log(count);
-                console.log(sorted[year]);
-                let paddingNum = 350 * count //figure out padding based on height of albumCard ;
-                console.log(paddingNum.toString());
+                let paddingNum = 387* count + (70 * (count-2))//figure out padding based on height of albumCard ;
                 yearElement.style.marginBottom = `${paddingNum}px`;
                 document.querySelector('#center-line').append(yearElement);
             }
-            console.log(timeline);
 
         })
 
@@ -74,6 +71,7 @@ function renderAlbums(artistInput) {
     .then(data => {
         albums = data.results;
         let sorted = sortAlbums(albums);
+        console.log(sorted);
         for(let year in sorted) {
             for(let date in sorted[year]) {
                 sorted[year][date].forEach(album => {
@@ -123,8 +121,9 @@ function createAlbumCard(album) {
     let albumGenre = document.createElement('h3');
     albumGenre.textContent = album.primaryGenreName;
     let albumDate = document.createElement('p');
+    albumDate.style.color = 'green'
     albumDate.classList.add('release-dates');
-    albumDate.textContent = album.releaseDate.substring(0,10);
+    albumDate.textContent = album.releaseDate.substring(5,10);
 
     albumCard.append(albumTitle);
     albumCard.append(albumArt);
@@ -133,21 +132,21 @@ function createAlbumCard(album) {
     albumCard.append(albumDate);
 
     document.querySelector('#timeline').append(albumCard);
-    albumCard.style.border = '3px solid green';
+    albumCard.style.border = '6px solid green';
     albumCard.style.borderRadius ='25px';
     albumCard.style.width = '300px';
+    albumCard.style.height = '375px'
     albumCard.style.marginBottom = '50px';
+    albumCard.style.fontFamily = 'Impact, fantasy';
+    albumCard.style.textAlign = 'center';
 
     let connector = document.createElement('div');
-    connector.style.width = '80px'
-    connector.style.height = '3px'
+    connector.style.width = '65px'
+    connector.style.height = '6px'
     connector.style.backgroundColor = 'green'
     connector.style.color = 'red'
-    connector.style.marginLeft ='290px'
-
+    connector.style.marginLeft ='305px'
 
     albumCard.append(connector);
-    console.log(albumCard);
-
 
 }
