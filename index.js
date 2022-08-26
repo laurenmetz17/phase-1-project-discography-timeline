@@ -192,11 +192,23 @@ function createAlbumCard(album) {
     albumDate.classList.add('release-dates');
     albumDate.textContent = album.releaseDate.substring(0,10);
 
+    let trackCount = document.createElement('p');
+    trackCount.textContent =`Track Count = ${album.trackCount}`;
+    trackCount.style.display = 'none';
+    
+    albumCard.addEventListener('mouseover', (event) => {
+        trackCount.style.display = 'block';
+    });
+    albumCard.addEventListener('mouseout', (event) => {
+        trackCount.style.display = 'none';
+    });
+
     albumCard.append(albumTitle);
     albumCard.append(albumArt);
     albumCard.append(albumGenre);
     albumCard.append(albumLink); 
     albumCard.append(albumDate);
+    albumCard.append(trackCount);
 
     document.querySelector('#timeline').append(albumCard);
     albumCard.style.border = '6px solid green';
