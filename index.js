@@ -84,7 +84,6 @@ function renderTimeline(e) {
         timelineTitle.style.textAlign = 'center';
         timelineTitle.style.fontFamily = 'Impact, fantasy'
         let timeline = document.querySelector('#timeline');
-        document.querySelector('#center-line').style.height = '200000px';
         timeline.append(timelineTitle);
         
         renderAlbums(artistInput).then(sorted => {
@@ -103,12 +102,25 @@ function renderTimeline(e) {
                 for(let date in sorted[year]) {
                     count = count + sorted[year][date].length;
                 }
-                let paddingNum = 462 * count + (70 * (count-2))//figure out padding based on height of albumCard ;
-                yearElement.style.marginBottom = `${paddingNum}px`;
+                let paddingNum = 0;
+                if(count <=5) {
+                    paddingNum = 462 * count + (25 * count)//(70 * (count-2))//figure out padding based on height of albumCard ;
+                }
+                else {
+                    paddingNum = 462 * count + (40 * count);
+                }
+                yearElement.style.height = `${paddingNum}px`;
+                console.log(count);
+                console.log(yearElement);
                 document.querySelector('#center-line').append(yearElement);
             }
 
         })
+        let lineHeight = 462 * 60;
+        document.querySelector('#center-line').style.height = `${lineHeight.toString()}px`;
+        console.log
+
+        console.log(timeline.style.height);
 
         
     }
@@ -123,8 +135,6 @@ function renderTimeline(e) {
     }
    // hard code need to fix so that the vertical line changes with the page height
     //add in connector arms for each album card 
-    //make album cards alternate sides of the center line
-    //add in event listeners on the album cards
 }
 
 //creates an album card for each album sorted by release date and adds them to the timeline
@@ -220,7 +230,7 @@ function createAlbumCard(album) {
     albumCard.style.textAlign = 'center';
 
     let connector = document.createElement('div');
-    connector.style.width = '65px'
+    connector.style.width = '50%';
     connector.style.height = '6px'
     connector.style.backgroundColor = 'green'
     connector.style.color = 'red'
