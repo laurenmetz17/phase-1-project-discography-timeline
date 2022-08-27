@@ -3,13 +3,12 @@ document.addEventListener('DOMContentLoaded',function() {
     let artistForm = document.querySelector('form');
     artistForm.addEventListener('submit', renderTimeline);
     let timelineButton = document.querySelector('[name = "submit-timeline"]');
-    console.log(timelineButton);
     let genreButton = document.querySelector('[name = "submit-genre"]');
-    console.log(genreButton);
     genreButton.addEventListener('click', renderGenre);
 
 })
 
+//render the genres of each album from that artist added in a table at the top of the page 
 function renderGenre(e) {
     let artistInput = e.target.parentNode.children[1].value
     let albums = [];
@@ -48,10 +47,6 @@ function renderGenre(e) {
 
         
         genreTable.style.tableLayout = 'fixed';
-        /*
-        genreTable.style.border = '3px solid green';
-        genreTable.style.borderCollapse = 'collapse';
-        */
         for(let genre in genreCount) {
             let genreName = document.createElement('th');
             genreName.textContent = genre;
@@ -68,12 +63,9 @@ function renderGenre(e) {
 }
 
 //note that it currently does not clear the page if you enter a new artkst it appneds to the end
-//has repeats of the same albums probably because 
 //add in a warning to the alert the user when they enter an artist that does not exist in the API
-//some aretist inputs match multiple actual artists and returns all of tbem
-//add something to ask user whcih artist they actually mean or auto find the strict match
 
-//build the html of the timeline to be styled
+//build the timeline with the correct years and styling calling the render albums function
 function renderTimeline(e) {
     e.preventDefault();
     console.log(e.target);
@@ -104,7 +96,7 @@ function renderTimeline(e) {
                 }
                 let paddingNum = 0;
                 if(count <=5) {
-                    paddingNum = 462 * count + (25 * count)//(70 * (count-2))//figure out padding based on height of albumCard ;
+                    paddingNum = 462 * count + (25 * count)
                 }
                 else {
                     paddingNum = 462 * count + (40 * count);
@@ -117,30 +109,20 @@ function renderTimeline(e) {
 
         })
         let lineHeight = 462 * 60;
-        document.querySelector('#center-line').style.height = `${lineHeight.toString()}px`;
-        console.log
-
-        console.log(timeline.style.height);
-
-        
+        document.querySelector('#center-line').style.height = `${lineHeight.toString()}px`;   
     }
     else {
+        //fix what should happen if there is already a timeline rendered
         let timelineTitle = document.querySelector('#timeline-title');
         timelineTitle.textContent = `${artistInput} Discography Timeline`;
         let oldAlbums = document.getElementsByClassName('albums');
-        console.log(oldAlbums)
-        //for(let i = 0; i< oldAlbums.length; i++) {
-        //    oldAlbums[i].remove();
-        //}
     }
-   // hard code need to fix so that the vertical line changes with the page height
-    //add in connector arms for each album card 
 }
 
 //creates an album card for each album sorted by release date and adds them to the timeline
 function renderAlbums(artistInput) {
     let albums = [];
-    //fetches the data of the artist directed by the artist inputdfc
+    //fetches the data of the artist directed by the artist input
     return fetch(`https://itunes.apple.com/search?media=music&entity=album&term=${artistInput}`).then(resp => resp.json())
     .then(data => {
         albums = data.results;
@@ -181,7 +163,7 @@ function sortAlbums(albums) {
     return sorted;
 }
 
-//creates an album card including a title, art, genre, link, and release date
+//creates an album card including a title, art, genre, link, trackCount, and release date styles the album card and adds connector 
 function createAlbumCard(album) {
     let albumCard = document.createElement('div');
     albumCard.classList.add('albums');
@@ -230,7 +212,7 @@ function createAlbumCard(album) {
     albumCard.style.textAlign = 'center';
 
     let connector = document.createElement('div');
-    connector.style.width = '50%';
+    connector.style.width = '27.6vw';
     connector.style.height = '6px'
     connector.style.backgroundColor = 'green'
     connector.style.color = 'red'
