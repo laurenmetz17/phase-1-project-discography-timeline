@@ -1,4 +1,6 @@
 let rendered = false;
+let renderedGenres = false;
+
 document.addEventListener('DOMContentLoaded',function() {
     let artistForm = document.querySelector('form');
     artistForm.addEventListener('submit', renderTimeline);
@@ -17,8 +19,15 @@ function renderGenre(e) {
     let genreTitle = document.querySelector('#genre-title');
     genreTitle.textContent = `${artistInput} Career Genre Count`;
     genreTitle.style.textAlign = 'center';
+
+    if(renderedGenres === true) {
+        let genreTable = document.querySelector('.genreTable');
+        genreTable.remove();
+    }
+
     return fetch(`https://itunes.apple.com/search?media=music&entity=album&term=${artistInput}`).then(resp => resp.json())
     .then(data => {
+        renderedGenres = true;
         albums = data.results;
         albums.forEach(album => {
             genres.push(album.primaryGenreName);
@@ -37,14 +46,14 @@ function renderGenre(e) {
         genreDiv.style.fontFamily = 'Impact, fantasy';
         genreDiv.style.border = '6px solid green';
         genreDiv.style.borderRadius = '25px';
-        let genreTable = document.querySelector('#genre-table');
+        let genreTable = document.createElement('table');
+        genreTable.classList.add('genreTable');
         genreTable.style.width = '100%';
         let genreNames = document.createElement('tr');
         let genreNums = document.createElement('tr');
         genreTable.append(genreNames);
         genreTable.append(genreNums);
-
-
+        genreDiv.append(genreTable);
         
         genreTable.style.tableLayout = 'fixed';
         for(let genre in genreCount) {
@@ -115,6 +124,7 @@ function renderTimeline(e) {
             document.querySelector('#center-line').append(yearElement);
         }
     })
+    
     let lineHeight = 462 * 60;
     document.querySelector('#center-line').style.height = `${lineHeight.toString()}px`;   
 }
