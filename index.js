@@ -1,4 +1,4 @@
-
+let rendered = false;
 document.addEventListener('DOMContentLoaded',function() {
     let artistForm = document.querySelector('form');
     artistForm.addEventListener('submit', renderTimeline);
@@ -68,55 +68,55 @@ function renderGenre(e) {
 //build the timeline with the correct years and styling calling the render albums function
 function renderTimeline(e) {
     e.preventDefault();
-    console.log(e.target);
     let artistInput = e.target.children[1].value;
     e.target.children[1].value = '';
-    if(document.querySelector('#timeline-title') == null) {
-        timelineTitle.textContent = `${artistInput} Discography Timeline`;
-        timelineTitle.style.textAlign = 'center';
-        timelineTitle.style.fontFamily = 'Impact, fantasy'
-        let timeline = document.querySelector('#timeline');
-        timeline.append(timelineTitle);
-        
-        renderAlbums(artistInput).then(sorted => {
-            let years = document.querySelector('#years');
-            for(let year in sorted) {
-                let yearElement = document.createElement('p');
-                yearElement.textContent = year;
-                yearElement.style.marginLeft = '30px';
-                yearElement.style.border = 'solid green';
-                yearElement.style.padding = '20px';
-                yearElement.style.fontSize = 'xx-large';
-                yearElement.style.fontFamily = 'Impact, fantasy';
-                yearElement.style.backgroundColor = 'green';
-                yearElement.style.borderRadius = '50px'
-                let count = 0;
-                for(let date in sorted[year]) {
-                    count = count + sorted[year][date].length;
-                }
-                let paddingNum = 0;
-                if(count <=5) {
-                    paddingNum = 462 * count + (25 * count)
-                }
-                else {
-                    paddingNum = 462 * count + (40 * count);
-                }
-                yearElement.style.height = `${paddingNum}px`;
-                console.log(count);
-                console.log(yearElement);
-                document.querySelector('#center-line').append(yearElement);
-            }
+    let timelineTitle = document.querySelector('#timelineTitle');
+    timelineTitle.textContent = `${artistInput} Discography Timeline`;
+    timelineTitle.style.textAlign = 'center';
+    timelineTitle.style.fontFamily = 'Impact, fantasy'
 
-        })
-        let lineHeight = 462 * 60;
-        document.querySelector('#center-line').style.height = `${lineHeight.toString()}px`;   
+    if(rendered === true) {
+        let timelineContent = document.getElementsByClassName('albums');
+        let years = document.getElementsByClassName('years');
+        while(timelineContent.length > 0) {
+            timelineContent.item(0).remove();
+        }
+        while(years.length > 0) {
+            years.item(0).remove();
+        }
     }
-    else {
-        //fix what should happen if there is already a timeline rendered
-        let timelineTitle = document.querySelector('#timeline-title');
-        timelineTitle.textContent = `${artistInput} Discography Timeline`;
-        let oldAlbums = document.getElementsByClassName('albums');
-    }
+        
+    renderAlbums(artistInput).then(sorted => {
+        rendered = true;
+        let years = document.querySelector('#years');
+        for(let year in sorted) {
+            let yearElement = document.createElement('p');
+            yearElement.classList.add('years');
+            yearElement.textContent = year;          
+            yearElement.style.marginLeft = '30px';
+            yearElement.style.border = 'solid green';
+            yearElement.style.padding = '20px';
+            yearElement.style.fontSize = 'xx-large';
+            yearElement.style.fontFamily = 'Impact, fantasy';
+            yearElement.style.backgroundColor = 'green';
+            yearElement.style.borderRadius = '50px'
+            let count = 0;
+            for(let date in sorted[year]) {
+                count = count + sorted[year][date].length;
+            }
+            let paddingNum = 0;
+            if(count <=5) {
+                paddingNum = 462 * count + (25 * count)
+            }
+            else {
+                paddingNum = 462 * count + (40 * count);
+            }
+            yearElement.style.height = `${paddingNum}px`;
+            document.querySelector('#center-line').append(yearElement);
+        }
+    })
+    let lineHeight = 462 * 60;
+    document.querySelector('#center-line').style.height = `${lineHeight.toString()}px`;   
 }
 
 //creates an album card for each album sorted by release date and adds them to the timeline
@@ -127,7 +127,6 @@ function renderAlbums(artistInput) {
     .then(data => {
         albums = data.results;
         let sorted = sortAlbums(albums);
-        console.log(sorted);
         for(let year in sorted) {
             for(let date in sorted[year]) {
                 sorted[year][date].forEach(album => {
@@ -217,8 +216,8 @@ function createAlbumCard(album) {
     connector.style.backgroundColor = 'green'
     connector.style.color = 'red'
     connector.style.marginLeft ='305px'
-    console.log(albumCard)
 
     albumCard.append(connector);
 
 }
+
